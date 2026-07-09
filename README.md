@@ -7,6 +7,8 @@ This repository is a starter scaffold for an enterprise RAG platform with:
 - MCP integration for tool access
 - PostgreSQL, Redis, and Qdrant-friendly service boundaries
 - RBAC and JWT-based security hooks
+- Optional OpenAI-backed answers with a local fallback corpus
+- Local document ingestion from `docs/kb`
 
 ## Layout
 
@@ -27,6 +29,31 @@ docker compose up -d
 ```bash
 uvicorn rag_enterprise.main:app --reload
 ```
+
+## Enable a real model
+
+Set these environment variables in `.env` to use OpenAI for generation:
+
+```bash
+LLM_PROVIDER=openai
+OPENAI_API_KEY=your_key_here
+OPENAI_MODEL=gpt-4o-mini
+OPENAI_API_BASE=https://api.openai.com/v1
+```
+
+## Add your own documents
+
+Drop `.md` or `.txt` files into `docs/kb`. You can add optional metadata at the top of each file:
+
+```text
+title: Engineering Release Notes
+document_id: eng-001
+allowed_groups: engineering,admin
+
+Your document text goes here.
+```
+
+The app will prefer local documents automatically and fall back to the built-in corpus if the folder is empty.
 
 ## Next Implementation Steps
 
