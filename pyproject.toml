@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rag-enterprise-blueprint"
+version = "0.1.0"
+description = "Enterprise RAG blueprint with FastAPI, MCP, and multi-agent orchestration"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.30.0",
+  "pydantic-settings>=2.4.0",
+  "sqlalchemy>=2.0.30",
+  "psycopg[binary]>=3.2.0",
+  "redis>=5.0.0",
+  "celery>=5.4.0",
+  "httpx>=0.27.0",
+  "python-jose[cryptography]>=3.3.0",
+  "qdrant-client>=1.10.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2.0",
+  "pytest-asyncio>=0.23.0",
+  "ruff>=0.6.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rag_enterprise"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
